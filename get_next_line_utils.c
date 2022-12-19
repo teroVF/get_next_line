@@ -70,26 +70,25 @@ char	*ft_strjoin(char *left_str, char *buff)
 	return (str);
 }
 
-char *get_firstline(char *text)
+char	*get_firstline(char *text)
 {
 	int 	i;
 	char	*str;
 
-	if(!text)
+	if (!text)
 		return (NULL);
 	i = 0;
 	while (text[i] && text[i] != '\n')
 		i++;
-	str = (char*) malloc( (i+2) * sizeof(char));
-	if(!str)
+	str = (char *) malloc((i + 2) * sizeof(char));
+	if (!str)
 		return (NULL);
 	i = 0;
 	while (text[i] && text[i] != '\n')
-		{
-			str[i] = text[i];
-			i++;
-		}
-
+	{
+		str[i] = text[i];
+		i++;
+	}
 	if (text[i] == '\n')
 	{
 		str[i] = '\n';
@@ -99,10 +98,10 @@ char *get_firstline(char *text)
 	return (str);
 }
 
-char *catch_text(int fd, char* text)
+char	*catch_text(int fd, char* text)
 {
 	char	*buff;
-	int		nr_byte;
+	int	nr_byte;
 
 	buff = (char*) malloc((BUFFER_SIZE + 1) * sizeof(char));
 	nr_byte = 1;

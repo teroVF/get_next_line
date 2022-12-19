@@ -162,19 +162,17 @@
 // 	return (str);
 // }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	char *line;
-	static char *buf;
-
+	char		*line;
+	static char	*buf;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return 0;
+		return (0);
 	buf = catch_text(fd, buf);
 	if (!buf)
 		return (NULL);
 	line = get_firstline(buf);
 	buf = catch_newtext(buf);
-	return line;
-
+	return (line);
 }

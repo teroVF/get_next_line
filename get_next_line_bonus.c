@@ -12,19 +12,17 @@
 
 #include "get_next_line_bonus.h"
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	char *line;
-	static char *buf[18192];
-
+	char		*line;
+	static char	*buf[4096];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return 0;
+		return (0);
 	buf[fd] = catch_text(fd, buf[fd]);
 	if (!buf[fd])
 		return (NULL);
 	line = get_firstline(buf[fd]);
 	buf[fd] = catch_newtext(buf[fd]);
-	return line;
-
+	return (line);
 }
