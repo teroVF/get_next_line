@@ -6,7 +6,7 @@
 /*   By: anvieira <anvieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 21:06:41 by anvieira          #+#    #+#             */
-/*   Updated: 2022/12/15 10:59:30 by anvieira         ###   ########.fr       */
+/*   Updated: 2022/12/29 03:49:41 by anvieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,24 +75,31 @@ char	*get_firstline(char *text)
 	int 	i;
 	char	*str;
 
+	i = 0;
 	if (!text)
 		return (NULL);
-	i = 0;
 	while (text[i] && text[i] != '\n')
 		i++;
-	str = (char *) malloc((i + 2) * sizeof(char));
+	str = malloc((i + 2) * sizeof(char));
 	if (!str)
 		return (NULL);
 	i = 0;
-	while (text[i] && text[i] != '\n')
+	// while (text[i] && text[i] != '\n')
+	// {
+	// 	str[i] = text[i];
+	// 	i++;
+	// }
+	// if (text[i] == '\n')
+	// {
+	// 	str[i] = '\n';
+	// 	i++;
+	// }
+	while (text[i])
 	{
 		str[i] = text[i];
 		i++;
-	}
-	if (text[i] == '\n')
-	{
-		str[i] = '\n';
-		i++;
+		if (text[i -1] == '\n')
+			break ;
 	}
 	str[i] = '\0';
 	return (str);
@@ -104,10 +111,9 @@ char	*catch_text(int fd, char* text)
 	int	nr_byte;
 
 	buff = (char*) malloc((BUFFER_SIZE + 1) * sizeof(char));
-	nr_byte = 1;
 	if (!buff)
 		return (NULL);
-
+	nr_byte = 1;
   	while (!ft_strchr(text,'\n') && nr_byte)
 	{
 		nr_byte = read(fd, buff, BUFFER_SIZE);
@@ -127,19 +133,19 @@ char	*catch_newtext(char *buf)
 {
 	int 	i;
 	int		j;
-	char *str;
+	char 	*str;
 
 	i = 0;
-	while(buf[i] && buf[i] != '\n')
+	while(buf[i] != '\0' && buf[i] != '\n')
 		i++;
 	if (!buf[i])
 	{
 		free(buf);
 		return (0);
 	}
-	str = (char*) malloc(sizeof(char)*(ft_strlen(buf) - i +1));
+	str = malloc(sizeof(char) * ((ft_strlen(buf) - i) + 1));
 	if(!str)
-		return(0);
+		return(NULL);
 	i++;
 	j = 0;
 	while(buf[i])
