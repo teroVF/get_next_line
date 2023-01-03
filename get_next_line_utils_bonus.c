@@ -6,18 +6,18 @@
 /*   By: anvieira <anvieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 21:06:41 by anvieira          #+#    #+#             */
-/*   Updated: 2022/12/21 20:44:29 by anvieira         ###   ########.fr       */
+/*   Updated: 2023/01/03 15:59:04 by anvieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(char *s)
 {
 	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (s[i] != '\0')
 		i++;
 	return (i);
 }
@@ -81,56 +81,5 @@ char *get_firstline(char *text)
 		i++;
 	}
 	str[i] = '\0';
-	return (str);
-}
-
-char *catch_text(int fd, char* text)
-{
-	char	*buff;
-	int		nr_byte;
-
-	buff = (char*) malloc((BUFFER_SIZE + 1) * sizeof(char));
-	nr_byte = 1;
-	if (!buff)
-		return (NULL);
-
-  	while (!ft_strchr(text,'\n') && nr_byte)
-	{
-		nr_byte = read(fd, buff, BUFFER_SIZE);
-		if (nr_byte == -1)
-		{
-			free(buff);
-			return (NULL);
-		}
-		buff[nr_byte] = '\0';
-		text = ft_strjoin(text, buff);
-	}
-	free(buff);
-	return (text);
-}
-
-char	*catch_newtext(char *buf)
-{
-	int 	i;
-	int		j;
-	char *str;
-
-	i = 0;
-	while(buf[i] && buf[i] != '\n')
-		i++;
-	if (!buf[i])
-	{
-		free(buf);
-		return (0);
-	}
-	str = (char*) malloc(sizeof(char)*(ft_strlen(buf) - i +1));
-	if(!str)
-		return(0);
-	i++;
-	j = 0;
-	while(buf[i])
-		str[j++] = buf[i++];
-	str[j] = '\0';
-	free(buf);
 	return (str);
 }

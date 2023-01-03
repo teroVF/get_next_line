@@ -6,7 +6,7 @@
 /*   By: anvieira <anvieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 21:06:35 by anvieira          #+#    #+#             */
-/*   Updated: 2022/12/15 10:56:02 by anvieira         ###   ########.fr       */
+/*   Updated: 2023/01/03 15:57:40 by anvieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 #endif
 
 char	*get_next_line(int fd);
-char *get_firstline(char *text);
-char *catch_text(int fd, char* text);
+char    *get_firstline(char *text);
+char    *catch_text(int fd, char* text);
 char	*catch_newtext(char *buf);
 size_t	ft_strlen(char *s);
 char	*ft_strchr(char *s, int c);

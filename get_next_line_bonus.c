@@ -20,7 +20,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
 	buf[fd] = catch_text(fd, buf[fd]);
-	if (!buf[fd])
+	if (buf[fd][0] != '\0')
 		return (NULL);
 	line = get_firstline(buf[fd]);
 	buf[fd] = catch_newtext(buf[fd]);
