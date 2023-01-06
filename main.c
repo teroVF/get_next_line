@@ -1,14 +1,14 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "get_next_line_bonus.h"
 #include <fcntl.h>
-#include "get_next_line.h"
 
-int main()
+int main(void)
 {
-	int i;
-	int fd = open("texto.txt", O_RDWR);
-	printf("%s\n", get_next_line(fd));
+	int		fd;
+	int		fd2;
+	fd = open("a.txt", O_RDONLY);
+	fd2 = open("b.txt", O_RDONLY);
+	printf("%s \n", get_next_line(fd));
+	printf("%s \n", get_next_line(fd2));
 	return 0;
 }
-

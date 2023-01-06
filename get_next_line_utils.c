@@ -6,7 +6,7 @@
 /*   By: anvieira <anvieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 21:06:41 by anvieira          #+#    #+#             */
-/*   Updated: 2023/01/03 16:01:39 by anvieira         ###   ########.fr       */
+/*   Updated: 2023/01/06 00:32:39 by anvieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,31 +65,5 @@ char	*ft_strjoin(char *left_str, char *buff)
 		str[i++] = buff[j++];
 	str[ft_strlen(left_str) + ft_strlen(buff)] = '\0';
 	free(left_str);
-	return (str);
-}
-
-char	*get_firstline(char *text)
-{
-	int 	i;
-	char	*str;
-
-	i = 0;
-	if (!text)
-		return (NULL);
-	while (text[i] && text[i] != '\n')
-		i++;
-	str = malloc((i + 2) * sizeof(char));
-	if (!str)
-		return (NULL);
-	i = 0;
-
-	while (text[i])
-	{
-		str[i] = text[i];
-		i++;
-		if (text[i -1] == '\n')
-			break ;
-	}
-	str[i] = '\0';
 	return (str);
 }
