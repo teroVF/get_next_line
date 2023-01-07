@@ -6,7 +6,7 @@
 /*   By: anvieira <anvieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:45:19 by anvieira          #+#    #+#             */
-/*   Updated: 2023/01/06 00:47:32 by anvieira         ###   ########.fr       */
+/*   Updated: 2023/01/07 00:45:28 by anvieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,8 @@ static char	*catch_newtext(char *buf)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*buf[1025];
-
-	if (fd < 0 || BUFFER_SIZE < 0 || read(fd, 0, 0) == -1 || fd > 1025 )
+	static char	*buf[1024];
+	if (fd < 0 || BUFFER_SIZE < 0 || read(fd, 0, 0) == -1 || fd > 1024)
 		return (NULL);
 	buf[fd] = catch_text(fd, buf[fd]);
 	if (buf[fd][0] == '\0')
@@ -101,3 +100,4 @@ char	*get_next_line(int fd)
 	buf[fd] = catch_newtext(buf[fd]);
 	return (line);
 }
+
