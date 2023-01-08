@@ -6,7 +6,7 @@
 /*   By: anvieira <anvieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 21:06:35 by anvieira          #+#    #+#             */
-/*   Updated: 2023/01/07 00:44:24 by anvieira         ###   ########.fr       */
+/*   Updated: 2023/01/08 21:32:54 by anvieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ size_t	ft_strlen(char *str);
 char	*ft_strchr(char *text, int c);
 char	*ft_strjoin(char *text, char *buf);
 char	*get_next_line(int fd);
+int		check_empty(int	fd, char *buf);
 
 #endif

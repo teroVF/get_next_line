@@ -15,14 +15,13 @@ int main(void)
 	int		fd2;
 	int		i;
 	int		n;
+	char *b = "";
 	fd = open("a.txt", O_RDONLY);
 	// fd1 = open("b.txt", O_RDONLY);
 	fd2 = 4,
 
-	i = read(fd, 0, 0);
-	n = read(fd2, 0, 0);
+	i = check_empty(fd, b);
 	printf("%d\n", i);
-	printf("%d\n", n);
 
 	return 0;
 }
