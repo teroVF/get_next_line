@@ -6,7 +6,7 @@
 /*   By: anvieira <anvieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 21:06:38 by anvieira          #+#    #+#             */
-/*   Updated: 2023/01/08 22:04:55 by anvieira         ###   ########.fr       */
+/*   Updated: 2023/01/09 20:38:11 by anvieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,20 @@ char	*ft_strjoin(char *text, char *buf)
 	if (!text)
 	{
 		text = (char *)malloc(1 * sizeof(char));
+		if (!text)
+			return (NULL);
 		text[0] = '\0';
 	}
-	if (!text || !buf)
-		return (NULL);
 	newtext = malloc(sizeof(char) * ((ft_strlen(text) + ft_strlen(buf)) + 1));
-	if (newtext == NULL)
+	if (!newtext)
+	{/* suspeito */
+		free(text);
 		return (NULL);
-	i = 0;
+	}
+	i = -1;
 	j = 0;
 	if (newtext)
-		while (text[i++] != '\0')
+		while (text[++i] != '\0')
 			newtext[i] = text[i];
 	while (buf[j] != '\0')
 		newtext[i++] = buf[j++];
@@ -74,8 +77,6 @@ static char	*get_firstline(char *text)
 	char	*str;
 
 	i = 0;
-	if (!text)
-		return (NULL);
 	while (text[i] && text[i] != '\n')
 		i++;
 	str = malloc((i + 2) * sizeof(char));
@@ -90,29 +91,30 @@ static char	*get_firstline(char *text)
 			break ;
 	}
 	str[i] = '\0';
+	free(text);
 	return (str);
 }
 
-int	check_empty(int	fd, char *buf)
-{
-	char	*line;
-	line = (char *) malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if(!line)
-		return (0);
-	if(!buf || buf[0] == '\0')
-		return (0);
-	if (read(fd, line, BUFFER_SIZE) == 0)
-	{
-		free(line);
-		return (0);
-	}
-	else
-	{
-		free(line);
-		return (1);
-	}
+// int	check_empty(int	fd, char *buf)
+// {
+// 	char	*line;
+// 	line = (char *) malloc(sizeof(char) * BUFFER_SIZE + 1);
+// 	if(!line)
+// 		return (0);
+// 	if(!buf || buf[0] == '\0')
+// 		return (0);
+// 	if (read(fd, line, BUFFER_SIZE) == 0)
+// 	{
+// 		free(line);
+// 		return (0);
+// 	}
+// 	else
+// 	{
+// 		free(line);
+// 		return (1);
+// 	}
 
-}
+// }
 
 static char	*catch_text(int fd, char *text)
 {
@@ -160,6 +162,9 @@ static char	*catch_newtext(char *buf)
 	j = 0;
 	while (buf[i])
 		str[j++] = buf[i++];
+	str[j] = '\0';
+	free(buf);
+
 	return (str);
 }
 
@@ -168,10 +173,10 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*buf;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1 || check_empty(fd, buf) == 1)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1 /* || check_empty(fd, buf) == 1 */)
 		return (NULL);
 	buf = catch_text(fd, buf);
-	if (buf[0] == '\0')
+	if (!buf || buf[0] == '\0')
 		return (NULL);
 	line = get_firstline(buf);
 	buf = catch_newtext(buf);
@@ -181,7 +186,6 @@ char	*get_next_line(int fd)
 int main(void)
 {
 	int		fd;
-	printf("%d", BUFFER_SIZE);
 	fd = open("b.txt", O_RDONLY);
 	printf("%s \n", get_next_line(fd));
 	return 0;

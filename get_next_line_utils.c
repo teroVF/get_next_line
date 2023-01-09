@@ -6,7 +6,7 @@
 /*   By: anvieira <anvieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 21:06:41 by anvieira          #+#    #+#             */
-/*   Updated: 2023/01/06 20:31:25 by anvieira         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:55:39 by anvieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ char	*ft_strjoin(char *text, char *buf)
 		text = (char *)malloc(1 * sizeof(char));
 		text[0] = '\0';
 	}
-	if (!text || !buf)
-		return (NULL);
 	newtext = malloc(sizeof(char) * ((ft_strlen(text) + ft_strlen(buf)) + 1));
 	if (newtext == NULL)
+		return (NULL);
+	if (!text)
 		return (NULL);
 	i = -1;
 	j = 0;
