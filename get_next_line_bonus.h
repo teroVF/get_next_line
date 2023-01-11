@@ -6,7 +6,7 @@
 /*   By: anvieira <anvieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 21:06:35 by anvieira          #+#    #+#             */
-/*   Updated: 2023/01/06 00:34:33 by anvieira         ###   ########.fr       */
+/*   Updated: 2023/01/11 00:45:14 by anvieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@
 #  define BUFFER_SIZE 42
 # endif
 
-size_t	ft_strlen(char *s);
-char	*ft_strchr(char *s, int c);
-char	*ft_strjoin(char *left_str, char *buff);
+size_t	ft_strlen(const char *str);
+char	*ft_strchr(char *text, int c);
+char	*ft_strjoin(const char *s1, const char *s2);
 char	*get_next_line(int fd);
+char	*ft_free(char *buffer, char *buf);
 
 #endif

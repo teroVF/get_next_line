@@ -5,8 +5,23 @@
 int main(void)
 {
 	int		fd;
+	int	i;
+	int n;
+	int l;
+	char *buf;
+	char *buf2;
+	char *buf3;
+
 	fd = open("a.txt", O_RDONLY);
-	printf("%s \n", get_next_line(fd));
+	buf = (char *) malloc(sizeof(char)* 10 + 1);
+	i = read(fd, buf, 10);
+	i = read(-1, buf, 10);
+	i = read(fd, 0, 0);
+	i = read(fd, buf, 10);
+	buf[i] = '\0';
+	buf2[n] = '\0';
+	buf3[l] = '\0';
+	printf("%s", buf);
 	return 0;
 }
 // int main(void)
