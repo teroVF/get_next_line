@@ -6,7 +6,7 @@
 /*   By: anvieira <anvieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 21:06:38 by anvieira          #+#    #+#             */
-/*   Updated: 2023/01/10 23:10:53 by anvieira         ###   ########.fr       */
+/*   Updated: 2023/01/14 01:01:39 by anvieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,19 @@
 // 	return (res);
 // }
 
-char	*ft_free(char *buffer, char *buf)
+static char	*ft_free(char *text, char *buf)
 {
 	char	*temp;
 
-	temp = ft_strjoin(buffer, buf);
-	free(buffer);
+	if (!text)
+	{
+		text = (char *) malloc(sizeof(char) * 1);
+		text[0] = '\0';
+	}
+
+	temp = ft_strjoin(text, buf);
+	free(text);
+	text = 0;
 	return (temp);
 }
 
@@ -100,23 +107,13 @@ static char	*get_firstline(char *text)
 	if (text[i] && text[i] == '\n')
 		str[i++] = '\n';
 	str[i] = '\0';
-	// free(text); ver isto
 	return (str);
 }
 
-
-// }
-/* ver o Join */
 static char	*catch_text(int fd, char *text)
 {
 	char	*buf;
 	int		nr_byte;
-
-	if (!text)
-	{
-		text = (char *) malloc(sizeof(char) * 1);
-		text[0] = '\0';
-	}
 
 	buf = (char *) malloc((BUFFER_SIZE * sizeof(char)) + 1);
 	if (!buf)
@@ -138,7 +135,7 @@ static char	*catch_text(int fd, char *text)
 	free(buf);
 	return (text);
 }
-/* parece bem */
+
 static char	*catch_newtext(char *buf)
 {
 	int		i;
@@ -151,11 +148,15 @@ static char	*catch_newtext(char *buf)
 	if (!buf[i])
 	{
 		free(buf);
+		buf = 0;
 		return (NULL);
 	}
 	str = (char *) malloc((sizeof(char) * (ft_strlen(buf) - i)) + 1);
 	if (!str)
+	{
+		free(buf);
 		return (NULL);
+	}
 	i++;
 	j = 0;
 	while (buf[i])
@@ -170,11 +171,18 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*buf;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0 /* || check_empty(fd, buf) == 1 */)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		free(buf);
+		buf = 0;
 		return (NULL);
+	}
 	buf = catch_text(fd, buf);
-	if (!buf /* || buf[0] == '\0' */)
+	if (!buf)
+	{
+		free(buf);
 		return (NULL);
+	}
 	line = get_firstline(buf);
 	buf = catch_newtext(buf);
 	return (line);
@@ -183,7 +191,17 @@ char	*get_next_line(int fd)
 // int main(void)
 // {
 // 	int		fd;
-// 	fd = open("b.txt", O_RDONLY);
-// 	printf("%s", get_next_line(fd));
+// 	fd = open("read_error.txt", O_RDONLY);
+// 	printf("1: %s", get_next_line(fd));
+// 	printf("2: %s\n", get_next_line(-1));
+// 	close(fd);
+// 	fd = open("read_error.txt", O_RDONLY);
+// 	printf("1: %s", get_next_line(fd));
+// 	printf("2: %s", get_next_line(fd));
+// 	printf("3: %s", get_next_line(fd));
+// 	printf("4: %s", get_next_line(fd));
+// 	printf("5: %s", get_next_line(fd));
+// 	printf("6: %s", get_next_line(fd));
+// 	printf("7: %s", get_next_line(fd));
 // 	return 0;
 // }
